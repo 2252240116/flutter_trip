@@ -42,9 +42,6 @@ with AutomaticKeepAliveClientMixin{
     print(
         "将mode2json"+jsonstring
     );
-    print(
-        "model数据:${model.localNavList?[0]?.title}"
-    );
   }
 
   @override

@@ -1,0 +1,8 @@
+
+///保护方法
+T? asT<T>(dynamic value){
+  if(value is T){
+    return value;
+  }
+  return null;
+}

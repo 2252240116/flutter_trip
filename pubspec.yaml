@@ -27,7 +27,7 @@ dependencies:
   #Toast
   fluttertoast: ^8.0.8
   #webview
-  webview_flutter: ^3.0.0
+  webview_flutter: ^2.0.8
   #汉字转拼音
   lpinyin: ^2.0.3
   #获取app信息插件

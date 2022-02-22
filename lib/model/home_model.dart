@@ -1,304 +1,295 @@
-import 'package:flutter_app_trip/model/travel.dart';
-import 'package:json_annotation/json_annotation.dart';
+import 'dart:convert';
 
-import 'flight.dart';
-import 'hotel.dart';
-  
-part 'home_model.g.dart';
+import 'package:flutter_app_trip/utils/index.dart';
 
-@JsonSerializable()
-  class HomeModel extends Object {
 
-  @JsonKey(name: 'bannerList')
-  List<BannerList?>? bannerList;
+class HomeModel {
+  Config config;
+  List<CommonModel> bannerList;
+  List<CommonModel> localNavList;
+  GridNavModel gridNav;
+  List<CommonModel> subNavList;
+  SalesBoxModel salesBox;
 
-  @JsonKey(name: 'config')
-  Config? config;
+  HomeModel({
+    required this.config,
+    required this.bannerList,
+    required this.localNavList,
+    required this.gridNav,
+    required this.subNavList,
+    required this.salesBox,
+  });
 
-  @JsonKey(name: 'gridNav')
-  GridNav? gridNav;
+  factory HomeModel.fromJson(Map<String, dynamic> jsonRes) {
+    final List<CommonModel>? bannerList =
+        jsonRes['bannerList'] is List ? <CommonModel>[] : null;
+    if (bannerList != null) {
+      for (final dynamic item in jsonRes['bannerList']!) {
+        if (item != null) {
+          bannerList
+              .add(CommonModel.fromJson(asT<Map<String, dynamic>>(item)!));
+        }
+      }
+    }
 
-  @JsonKey(name: 'localNavList')
-  List<LocalNavList?>? localNavList;
+    final List<CommonModel>? localNavList =
+        jsonRes['localNavList'] is List ? <CommonModel>[] : null;
+    if (localNavList != null) {
+      for (final dynamic item in jsonRes['localNavList']!) {
+        if (item != null) {
+          localNavList
+              .add(CommonModel.fromJson(asT<Map<String, dynamic>>(item)!));
+        }
+      }
+    }
 
-  @JsonKey(name: 'salesBox')
-  SalesBox? salesBox;
+    final List<CommonModel>? subNavList =
+        jsonRes['subNavList'] is List ? <CommonModel>[] : null;
+    if (subNavList != null) {
+      for (final dynamic item in jsonRes['subNavList']!) {
+        if (item != null) {
+          subNavList
+              .add(CommonModel.fromJson(asT<Map<String, dynamic>>(item)!));
+        }
+      }
+    }
 
-  @JsonKey(name: 'subNavList')
-  List<SubNavList?>? subNavList;
+    return HomeModel(
+      config: Config.fromJson(asT<Map<String, dynamic>>(jsonRes['config'])!),
+      bannerList: bannerList!,
+      localNavList: localNavList!,
+      gridNav:
+          GridNavModel.fromJson(asT<Map<String, dynamic>>(jsonRes['gridNav'])!),
+      subNavList: subNavList!,
+      salesBox: SalesBoxModel.fromJson(
+          asT<Map<String, dynamic>>(jsonRes['salesBox'])!),
+    );
+  }
 
-  HomeModel(this.bannerList,this.config,this.gridNav,this.localNavList,this.salesBox,this.subNavList,);
+  @override
+  String toString() {
+    return jsonEncode(this);
+  }
 
-  factory HomeModel.fromJson(Map<String, dynamic> srcJson) => _$HomeModelFromJson(srcJson);
+  Map<String, dynamic> toJson() => <String, dynamic>{
+        'config': config,
+        'bannerList': bannerList,
+        'localNavList': localNavList,
+        'gridNav': gridNav,
+        'subNavList': subNavList,
+        'salesBox': salesBox,
+      };
 
-  Map<String, dynamic> toJson() => _$HomeModelToJson(this);
-
+  HomeModel clone() => HomeModel.fromJson(
+      asT<Map<String, dynamic>>(jsonDecode(jsonEncode(this)))!);
 }
 
-  
-@JsonSerializable()
-  class BannerList extends Object {
+class Config {
+  Config({
+    required this.searchUrl,
+  });
 
-  @JsonKey(name: 'icon')
-  String icon;
+  factory Config.fromJson(Map<String, dynamic> jsonRes) => Config(
+        searchUrl: asT<String>(jsonRes['searchUrl'])!,
+      );
 
-  @JsonKey(name: 'url')
-  String url;
-
-  BannerList(this.icon,this.url,);
-
-  factory BannerList.fromJson(Map<String, dynamic> srcJson) => _$BannerListFromJson(srcJson);
-
-  Map<String, dynamic> toJson() => _$BannerListToJson(this);
-
-}
-
-  
-@JsonSerializable()
-  class Config extends Object {
-
-  @JsonKey(name: 'searchUrl')
   String searchUrl;
 
-  Config(this.searchUrl,);
+  @override
+  String toString() {
+    return jsonEncode(this);
+  }
 
-  factory Config.fromJson(Map<String, dynamic> srcJson) => _$ConfigFromJson(srcJson);
+  Map<String, dynamic> toJson() => <String, dynamic>{
+        'searchUrl': searchUrl,
+      };
 
-  Map<String, dynamic> toJson() => _$ConfigToJson(this);
-
+  Config clone() =>
+      Config.fromJson(asT<Map<String, dynamic>>(jsonDecode(jsonEncode(this)))!);
 }
 
-  
-@JsonSerializable()
-  class GridNav extends Object {
+class GridNavModel {
+  GridNavModel({
+    required this.hotel,
+    required this.flight,
+    required this.travel,
+  });
 
-  @JsonKey(name: 'flight')
-  Flight? flight;
+  factory GridNavModel.fromJson(Map<String, dynamic> jsonRes) => GridNavModel(
+        hotel:
+            GridNavItem.fromJson(asT<Map<String, dynamic>>(jsonRes['hotel'])!),
+        flight:
+            GridNavItem.fromJson(asT<Map<String, dynamic>>(jsonRes['flight'])!),
+        travel:
+            GridNavItem.fromJson(asT<Map<String, dynamic>>(jsonRes['travel'])!),
+      );
 
-  @JsonKey(name: 'hotel')
-  Hotel? hotel;
+  GridNavItem hotel;
+  GridNavItem flight;
+  GridNavItem travel;
 
-  @JsonKey(name: 'travel')
-  Travel? travel;
+  @override
+  String toString() {
+    return jsonEncode(this);
+  }
 
-  GridNav(this.flight,this.hotel,this.travel,);
+  Map<String, dynamic> toJson() => <String, dynamic>{
+        'hotel': hotel,
+        'flight': flight,
+        'travel': travel,
+      };
 
-  factory GridNav.fromJson(Map<String, dynamic> srcJson) => _$GridNavFromJson(srcJson);
-
-  Map<String, dynamic> toJson() => _$GridNavToJson(this);
-
+  GridNavModel clone() => GridNavModel.fromJson(
+      asT<Map<String, dynamic>>(jsonDecode(jsonEncode(this)))!);
 }
 
-@JsonSerializable()
-  class LocalNavList extends Object {
+class CommonModel {
+  CommonModel({
+    required this.icon,
+    required this.url,
+    this.title,
+    this.hideAppBar,
+    this.statusBarColor,
+  });
 
-  @JsonKey(name: 'hideAppBar')
-  bool hideAppBar;
+  factory CommonModel.fromJson(Map<String, dynamic> jsonRes) => CommonModel(
+        title: jsonRes['title'] ?? '',
+        icon: jsonRes['icon'] ?? '',
+        url: jsonRes['url'] ?? '',
+        hideAppBar: jsonRes['hideAppBar'] ?? false,
+        statusBarColor: jsonRes['statusBarColor'] ?? '',
+      );
 
-  @JsonKey(name: 'icon')
   String icon;
-
-  @JsonKey(name: 'statusBarColor')
-  String statusBarColor;
-
-  @JsonKey(name: 'title')
-  String title;
-
-  @JsonKey(name: 'url')
   String url;
+  String? title;
+  bool? hideAppBar;
+  String? statusBarColor;
 
-  LocalNavList(this.hideAppBar,this.icon,this.statusBarColor,this.title,this.url,);
+  @override
+  String toString() {
+    return jsonEncode(this);
+  }
 
-  factory LocalNavList.fromJson(Map<String, dynamic> srcJson) => _$LocalNavListFromJson(srcJson);
+  Map<String, dynamic> toJson() => <String, dynamic>{
+        'title': title,
+        'icon': icon,
+        'url': url,
+        'hideAppBar': hideAppBar,
+        'statusBarColor': statusBarColor,
+      };
 
-  Map<String, dynamic> toJson() => _$LocalNavListToJson(this);
-
+  CommonModel clone() => CommonModel.fromJson(
+      asT<Map<String, dynamic>>(jsonDecode(jsonEncode(this)))!);
 }
 
-  
-@JsonSerializable()
-  class SalesBox extends Object {
+class GridNavItem {
+  GridNavItem({
+    required this.startColor,
+    required this.endColor,
+    required this.mainItem,
+    required this.item1,
+    required this.item2,
+    required this.item3,
+    required this.item4,
+  });
 
-  @JsonKey(name: 'bigCard1')
-  BigCard1? bigCard1;
+  factory GridNavItem.fromJson(Map<String, dynamic> jsonRes) => GridNavItem(
+        startColor: asT<String>(jsonRes['startColor'])!,
+        endColor: asT<String>(jsonRes['endColor'])!,
+        mainItem: CommonModel.fromJson(
+            asT<Map<String, dynamic>>(jsonRes['mainItem'])!),
+        item1:
+            CommonModel.fromJson(asT<Map<String, dynamic>>(jsonRes['item1'])!),
+        item2:
+            CommonModel.fromJson(asT<Map<String, dynamic>>(jsonRes['item2'])!),
+        item3:
+            CommonModel.fromJson(asT<Map<String, dynamic>>(jsonRes['item3'])!),
+        item4:
+            CommonModel.fromJson(asT<Map<String, dynamic>>(jsonRes['item4'])!),
+      );
 
-  @JsonKey(name: 'bigCard2')
-  BigCard2? bigCard2;
+  String startColor;
+  String endColor;
+  CommonModel mainItem;
+  CommonModel item1;
+  CommonModel item2;
+  CommonModel item3;
+  CommonModel item4;
 
-  @JsonKey(name: 'icon')
+  @override
+  String toString() {
+    return jsonEncode(this);
+  }
+
+  Map<String, dynamic> toJson() => <String, dynamic>{
+        'startColor': startColor,
+        'endColor': endColor,
+        'mainItem': mainItem,
+        'item1': item1,
+        'item2': item2,
+        'item3': item3,
+        'item4': item4,
+      };
+
+  GridNavItem clone() => GridNavItem.fromJson(
+      asT<Map<String, dynamic>>(jsonDecode(jsonEncode(this)))!);
+}
+
+class SalesBoxModel {
+  SalesBoxModel({
+    required this.icon,
+    required this.moreUrl,
+    required this.bigCard1,
+    required this.bigCard2,
+    required this.smallCard1,
+    required this.smallCard2,
+    required this.smallCard3,
+    required this.smallCard4,
+  });
+
+  factory SalesBoxModel.fromJson(Map<String, dynamic> jsonRes) => SalesBoxModel(
+        icon: asT<String>(jsonRes['icon'])!,
+        moreUrl: asT<String>(jsonRes['moreUrl'])!,
+        bigCard1: CommonModel.fromJson(
+            asT<Map<String, dynamic>>(jsonRes['bigCard1'])!),
+        bigCard2: CommonModel.fromJson(
+            asT<Map<String, dynamic>>(jsonRes['bigCard2'])!),
+        smallCard1: CommonModel.fromJson(
+            asT<Map<String, dynamic>>(jsonRes['smallCard1'])!),
+        smallCard2: CommonModel.fromJson(
+            asT<Map<String, dynamic>>(jsonRes['smallCard2'])!),
+        smallCard3: CommonModel.fromJson(
+            asT<Map<String, dynamic>>(jsonRes['smallCard3'])!),
+        smallCard4: CommonModel.fromJson(
+            asT<Map<String, dynamic>>(jsonRes['smallCard4'])!),
+      );
+
   String icon;
-
-  @JsonKey(name: 'moreUrl')
   String moreUrl;
+  CommonModel bigCard1;
+  CommonModel bigCard2;
+  CommonModel smallCard1;
+  CommonModel smallCard2;
+  CommonModel smallCard3;
+  CommonModel smallCard4;
 
-  @JsonKey(name: 'smallCard1')
-  SmallCard1? smallCard1;
+  @override
+  String toString() {
+    return jsonEncode(this);
+  }
 
-  @JsonKey(name: 'smallCard2')
-  SmallCard2? smallCard2;
+  Map<String, dynamic> toJson() => <String, dynamic>{
+        'icon': icon,
+        'moreUrl': moreUrl,
+        'bigCard1': bigCard1,
+        'bigCard2': bigCard2,
+        'smallCard1': smallCard1,
+        'smallCard2': smallCard2,
+        'smallCard3': smallCard3,
+        'smallCard4': smallCard4,
+      };
 
-  @JsonKey(name: 'smallCard3')
-  SmallCard3? smallCard3;
-
-  @JsonKey(name: 'smallCard4')
-  SmallCard4? smallCard4;
-
-  SalesBox(this.bigCard1,this.bigCard2,this.icon,this.moreUrl,this.smallCard1,this.smallCard2,this.smallCard3,this.smallCard4,);
-
-  factory SalesBox.fromJson(Map<String, dynamic> srcJson) => _$SalesBoxFromJson(srcJson);
-
-  Map<String, dynamic> toJson() => _$SalesBoxToJson(this);
-
+  SalesBoxModel clone() => SalesBoxModel.fromJson(
+      asT<Map<String, dynamic>>(jsonDecode(jsonEncode(this)))!);
 }
-
-  
-@JsonSerializable()
-  class BigCard1 extends Object {
-
-  @JsonKey(name: 'icon')
-  String icon;
-
-  @JsonKey(name: 'title')
-  String title;
-
-  @JsonKey(name: 'url')
-  String url;
-
-  BigCard1(this.icon,this.title,this.url,);
-
-  factory BigCard1.fromJson(Map<String, dynamic> srcJson) => _$BigCard1FromJson(srcJson);
-
-  Map<String, dynamic> toJson() => _$BigCard1ToJson(this);
-
-}
-
-  
-@JsonSerializable()
-  class BigCard2 extends Object {
-
-  @JsonKey(name: 'icon')
-  String icon;
-
-  @JsonKey(name: 'title')
-  String title;
-
-  @JsonKey(name: 'url')
-  String url;
-
-  BigCard2(this.icon,this.title,this.url,);
-
-  factory BigCard2.fromJson(Map<String, dynamic> srcJson) => _$BigCard2FromJson(srcJson);
-
-  Map<String, dynamic> toJson() => _$BigCard2ToJson(this);
-
-}
-
-  
-@JsonSerializable()
-  class SmallCard1 extends Object {
-
-  @JsonKey(name: 'icon')
-  String icon;
-
-  @JsonKey(name: 'title')
-  String title;
-
-  @JsonKey(name: 'url')
-  String url;
-
-  SmallCard1(this.icon,this.title,this.url,);
-
-  factory SmallCard1.fromJson(Map<String, dynamic> srcJson) => _$SmallCard1FromJson(srcJson);
-
-  Map<String, dynamic> toJson() => _$SmallCard1ToJson(this);
-
-}
-
-  
-@JsonSerializable()
-  class SmallCard2 extends Object {
-
-  @JsonKey(name: 'icon')
-  String icon;
-
-  @JsonKey(name: 'title')
-  String title;
-
-  @JsonKey(name: 'url')
-  String url;
-
-  SmallCard2(this.icon,this.title,this.url,);
-
-  factory SmallCard2.fromJson(Map<String, dynamic> srcJson) => _$SmallCard2FromJson(srcJson);
-
-  Map<String, dynamic> toJson() => _$SmallCard2ToJson(this);
-
-}
-
-  
-@JsonSerializable()
-  class SmallCard3 extends Object {
-
-  @JsonKey(name: 'icon')
-  String icon;
-
-  @JsonKey(name: 'title')
-  String title;
-
-  @JsonKey(name: 'url')
-  String url;
-
-  SmallCard3(this.icon,this.title,this.url,);
-
-  factory SmallCard3.fromJson(Map<String, dynamic> srcJson) => _$SmallCard3FromJson(srcJson);
-
-  Map<String, dynamic> toJson() => _$SmallCard3ToJson(this);
-
-}
-
-  
-@JsonSerializable()
-  class SmallCard4 extends Object {
-
-  @JsonKey(name: 'icon')
-  String icon;
-
-  @JsonKey(name: 'title')
-  String title;
-
-  @JsonKey(name: 'url')
-  String url;
-
-  SmallCard4(this.icon,this.title,this.url,);
-
-  factory SmallCard4.fromJson(Map<String, dynamic> srcJson) => _$SmallCard4FromJson(srcJson);
-
-  Map<String, dynamic> toJson() => _$SmallCard4ToJson(this);
-
-}
-
-  
-@JsonSerializable()
-  class SubNavList extends Object {
-
-  @JsonKey(name: 'hideAppBar')
-  bool hideAppBar;
-
-  @JsonKey(name: 'icon')
-  String icon;
-
-  @JsonKey(name: 'title')
-  String title;
-
-  @JsonKey(name: 'url')
-  String url;
-
-  SubNavList(this.hideAppBar,this.icon,this.title,this.url,);
-
-  factory SubNavList.fromJson(Map<String, dynamic> srcJson) => _$SubNavListFromJson(srcJson);
-
-  Map<String, dynamic> toJson() => _$SubNavListToJson(this);
-
-}
-
-  
