@@ -49,10 +49,10 @@ class _TabNavigatorState extends State<TabNavigator> {
             });
           },
           children: const [
-            HomePage(title: "0"),
-            HomePage(title: "1"),
-            HomePage(title: "2"),
-            HomePage(title: "3")
+            HomePage(),
+            HomePage(),
+            HomePage(),
+            HomePage()
           ],
         ),
       ),
