@@ -40,7 +40,7 @@ class _WebViewState extends State<CustomWebView> {
   Widget build(BuildContext context) {
     //判空处理
     String statusBarColorStr = widget.statusBarColor ?? 'ffffff';
-    //将字符串类型颜色转换成Color  背景色与状态栏色保持一致
+    //将字符串类型颜色 转换成Color  背景色与状态栏色保持一致
     Color backgroundColor = Color(int.parse('0xff' + statusBarColorStr));
     //返回按钮色与背景色相反
     Color backButtonColor;
@@ -91,7 +91,9 @@ class _WebViewState extends State<CustomWebView> {
     return Container(
       padding: EdgeInsets.fromLTRB(0, 40, 0, 10),
       color: backgroundColor,
+      ///百分比布局
       child: FractionallySizedBox(
+        //表示宽度填充满 0.5表示就是一半的宽度
         widthFactor: 1,
         child: Stack(
           children: [
@@ -108,8 +110,9 @@ class _WebViewState extends State<CustomWebView> {
                 ),
               ),
             ),
+            ///层叠布局Positioned 主要通过四个角显示
             Positioned(
-                left: 0,
+                left: 0,//这里左右都写成0 表示整整一行
                 right: 0,
                 child: Center(
                   child: Text(
