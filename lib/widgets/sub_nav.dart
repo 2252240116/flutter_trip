@@ -5,44 +5,48 @@ import 'package:flutter_app_trip/utils/navigator_util.dart';
 import 'package:flutter_app_trip/widgets/cached_image.dart';
 import 'package:flutter_app_trip/widgets/webview.dart';
 
-class LocalNav extends StatelessWidget {
-  final List<CommonModel> localNavList;
+class SubNav extends StatelessWidget {
+  final List<CommonModel> subNavList;
 
-  const LocalNav({
-    Key? key,
-    required this.localNavList,
-  }) : super(key: key);
+  const SubNav({Key? key, required this.subNavList}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    //思路2. 写个集合items套住多个 _item
-    List<Widget> items = [];
-    localNavList.forEach((model) {
-      items.add(_item(context, model));
-    });
-
     return Container(
-      //圆角
+      padding: EdgeInsets.only(top: 7, bottom: 7),
       decoration: BoxDecoration(
-        color: Colors.white,
         borderRadius: BorderRadius.circular(6),
+        color: Colors.white,
       ),
-      child: Padding(
-        padding: EdgeInsets.only(top: 7,bottom: 7),
-        //思路3. 用Row横向布局排列集合items
-        child: Row(
-          /// MainAxisAlignment.spaceBetween
-          /// MainAxisAlignment.spaceAround
-          /// MainAxisAlignment.spaceEvenly
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          //这个地方 多个child 但是不用[] 因为items是集合
-          children: items,
-        ),
-      ),
+      child: _items(context),
     );
   }
 
-  //思路1 先写单个item
+  Widget _items(BuildContext context) {
+    List<Widget> listItems = [];
+    subNavList.forEach((model) {
+      listItems.add(_item(context, model));
+    });
+
+    ///2 表示只有两行  0.5为了处理奇数个数
+    int count = (subNavList.length / 2 + 0.5).toInt();
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: listItems.sublist(0, count),
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: listItems.sublist(count, subNavList.length),
+        )
+      ],
+    );
+  }
+
   Widget _item(BuildContext context, CommonModel model) {
     return GestureDetector(
       onTap: () {
@@ -55,16 +59,18 @@ class LocalNav extends StatelessWidget {
             ));
       },
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           CachedImage(
             url: model.icon,
-            width: 32,
-            height: 32,
+            width: 18,
+            height: 18,
+            fit: BoxFit.fill,
           ),
-          Padding(padding: EdgeInsets.only(top: 5)),
+          SizedBox(height: 7),
           Text(
             model.title ?? '',
-            style: TextStyle(fontSize: 12,color:Color(0xff333333)),
+            style: TextStyle(fontSize: 12, color: Color(0xff333333)),
           )
         ],
       ),

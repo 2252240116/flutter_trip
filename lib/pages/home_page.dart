@@ -7,6 +7,8 @@ import 'package:flutter_app_trip/utils/navigator_util.dart';
 import 'package:flutter_app_trip/widgets/cached_image.dart';
 import 'package:flutter_app_trip/widgets/grid_nav.dart';
 import 'package:flutter_app_trip/widgets/local_nav.dart';
+import 'package:flutter_app_trip/widgets/sales_box.dart';
+import 'package:flutter_app_trip/widgets/sub_nav.dart';
 import 'package:flutter_app_trip/widgets/webview.dart';
 import 'package:flutter_card_swipper/flutter_card_swiper.dart';
 
@@ -37,22 +39,34 @@ class _HomePageState extends State<HomePage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xfff2f2f2),
+      backgroundColor: Color(0xfff2f2f2), //主要基色
       body: ListView(
         children: [
           _banner,
           Container(
-            margin: EdgeInsets.fromLTRB(7, 4, 7, 4),
+            margin: EdgeInsets.fromLTRB(7, 4, 7, 0),
             child: LocalNav(
               localNavList: localNavList,
             ),
           ),
           Container(
-            margin: EdgeInsets.fromLTRB(7, 0, 7, 4),
+            margin: EdgeInsets.fromLTRB(7, 4, 7, 4),
             child: GridNav(
               gridNavModel: gridNav,
             ),
-          )
+          ),
+          Container(
+            margin: EdgeInsets.fromLTRB(7, 4, 7, 4),
+            child: SubNav(
+              subNavList: subNavList,
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.fromLTRB(7, 4, 7, 4),
+            child: SalesBox(
+              salesBox: salesBox,
+            ),
+          ),
         ],
       ),
     );
