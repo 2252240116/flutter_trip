@@ -5,6 +5,7 @@ import 'package:flutter_app_trip/dao/home_dao.dart';
 import 'package:flutter_app_trip/model/home_model.dart';
 import 'package:flutter_app_trip/utils/navigator_util.dart';
 import 'package:flutter_app_trip/widgets/cached_image.dart';
+import 'package:flutter_app_trip/widgets/grid_nav.dart';
 import 'package:flutter_app_trip/widgets/local_nav.dart';
 import 'package:flutter_app_trip/widgets/webview.dart';
 import 'package:flutter_card_swipper/flutter_card_swiper.dart';
@@ -45,6 +46,12 @@ class _HomePageState extends State<HomePage>
             child: LocalNav(
               localNavList: localNavList,
             ),
+          ),
+          Container(
+            margin: EdgeInsets.fromLTRB(7, 0, 7, 4),
+            child: GridNav(
+              gridNavModel: gridNav,
+            ),
           )
         ],
       ),
@@ -78,16 +85,19 @@ class _HomePageState extends State<HomePage>
   Future refreshData() async {
     //通过dio获取model
     HomeModel model = await HomeDao.fetch();
-    bannerList = model.bannerList;
-    localNavList = model.localNavList;
-    gridNav = model.gridNav;
-    subNavList = model.subNavList;
-    salesBox = model.salesBox;
+    //必须要有setState
+    setState(() {
+      bannerList = model.bannerList;
+      localNavList = model.localNavList;
+      gridNav = model.gridNav;
+      subNavList = model.subNavList;
+      salesBox = model.salesBox;
 
-    //测试代码 model2map
-    Map map = model.toJson();
-    //map2json
-    String jsonstring = json.encode(map);
-    print("将mode2json" + jsonstring);
+      //测试代码 model2map
+      // Map map = model.toJson();
+      //map2json
+      // String jsonstring = json.encode(map);
+      // print("将mode2json" + jsonstring);
+    });
   }
 }
