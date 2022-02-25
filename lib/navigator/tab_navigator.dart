@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_trip/pages/home_page.dart';
 import 'package:flutter_app_trip/pages/my_page.dart';
+import 'package:flutter_app_trip/pages/travel_page.dart';
 import 'package:flutter_app_trip/widgets/search_page.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:package_info/package_info.dart';
@@ -53,7 +54,7 @@ class _TabNavigatorState extends State<TabNavigator> {
           children: const [
             HomePage(),
             SearchPage(hideLeft: true,),
-            HomePage(),
+            TravelPage(),
             MyPage()
           ],
         ),
