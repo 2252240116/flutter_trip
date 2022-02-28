@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_trip/dao/travel_dao.dart';
 import 'package:flutter_app_trip/model/travel_model.dart';
+import 'package:flutter_app_trip/utils/navigator_util.dart';
 import 'package:flutter_app_trip/widgets/cached_image.dart';
 import 'package:flutter_app_trip/widgets/loading_container.dart';
+import 'package:flutter_app_trip/widgets/webview.dart';
 
 const PAGE_SIZE = 10;
 
@@ -144,25 +146,38 @@ class _TravelItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PhysicalModel(
-      color: Colors.white,
-      clipBehavior: Clip.antiAlias, //抗锯齿
-      borderRadius: BorderRadius.circular(6.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start, //默认是剧中
-        children: [
-          ///Column下使用Expanded撑满高度
-          itemImage,
-          Container(
-              padding: EdgeInsets.only(left: 4, top: 4),
-              child: Text(
-                item.article.articleTitle,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(fontSize: 14, color: Colors.black),
-              )),
-          itemInfo
-        ],
+    return GestureDetector(
+      onTap: () {
+        if (item.article.urls.length > 0) {
+          NavigatorUtil.push(
+            context,
+            CustomWebView(
+              url: item.article.urls[0].h5Url,
+              title: '详情',
+            ),
+          );
+        }
+      },
+      child: PhysicalModel(
+        color: Colors.white,
+        clipBehavior: Clip.antiAlias, //抗锯齿
+        borderRadius: BorderRadius.circular(6.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start, //默认是剧中
+          children: [
+            ///Column下使用Expanded撑满高度
+            itemImage,
+            Container(
+                padding: EdgeInsets.only(left: 4, top: 4),
+                child: Text(
+                  item.article.articleTitle,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(fontSize: 14, color: Colors.black),
+                )),
+            itemInfo
+          ],
+        ),
       ),
     );
   }
@@ -209,7 +224,9 @@ class _TravelItem extends StatelessWidget {
                   size: 12,
                   color: Colors.grey,
                 ),
-                SizedBox(width: 4,),
+                SizedBox(
+                  width: 4,
+                ),
                 // 如果你的Text在Row中, 你需要使用 Expanded:
                 Text(
                   item.article.likeCount.toString(),
