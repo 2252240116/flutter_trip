@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app_trip/dao/travel_tab_dao.dart';
 import 'package:flutter_app_trip/model/travel_tab_model.dart';
 import 'package:flutter_app_trip/pages/travel_tab_page.dart';
+import 'package:flutter_app_trip/widgets/custom_tabbar_indicator.dart';
 
 class TravelPage extends StatefulWidget {
   const TravelPage({Key? key}) : super(key: key);
@@ -45,15 +46,15 @@ class _TravelPage extends State<TravelPage> with TickerProviderStateMixin {
             color: Colors.blue,
           ),
           Container(
-            color: Colors.red,
             child: TabBar(
               labelColor: Color(int.parse('0xff000000')),
               unselectedLabelColor: Color(int.parse('0xff666666')),
               labelPadding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-              isScrollable: true,//需要这个属性 要写上 否则很奇怪tab太色的看不见
-              indicator: UnderlineTabIndicator(
+              isScrollable: true,//需要这个属性 要写上 否则很奇怪tab白色的看不见
+              indicator: CustomIndicator(
                   borderSide: BorderSide(color: Colors.blue, width: 3),
-                  insets: EdgeInsets.fromLTRB(20, 0, 20, 0)),
+                  insets: EdgeInsets.fromLTRB(20, 0, 20, 10)),
+              // indicator: const BoxDecoration(),//无下划线
               controller: _tabController,
               tabs: tabs.map<Tab>(
                 (TravelTab tab) {
