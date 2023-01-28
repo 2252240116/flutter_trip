@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 /**
  * 自定义页面LoadingView Widget
+ * 万物皆widget，两种情况，要么loading widget 要么界面
  */
 class LoadingContainer extends StatelessWidget {
   final bool isLoading;

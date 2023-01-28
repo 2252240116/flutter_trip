@@ -5,9 +5,13 @@ import 'package:flutter_app_trip/utils/navigator_util.dart';
 import 'package:flutter_app_trip/widgets/cached_image.dart';
 import 'package:flutter_app_trip/widgets/webview.dart';
 
+/**
+ * StatelessWidget无状态组件
+ */
 class LocalNav extends StatelessWidget {
+  //不可变参数
   final List<CommonModel> localNavList;
-
+  //required 必参
   const LocalNav({
     Key? key,
     required this.localNavList,
@@ -31,9 +35,9 @@ class LocalNav extends StatelessWidget {
         padding: EdgeInsets.only(top: 7,bottom: 7),
         //思路3. 用Row横向布局排列集合items
         child: Row(
-          /// MainAxisAlignment.spaceBetween
-          /// MainAxisAlignment.spaceAround
-          /// MainAxisAlignment.spaceEvenly
+          /// MainAxisAlignment.spaceBetween  两边靠 中间等距
+          /// MainAxisAlignment.spaceAround   每个单位左右等距
+          /// MainAxisAlignment.spaceEvenly   空格等距
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           //这个地方 多个child 但是不用[] 因为items是集合
           children: items,

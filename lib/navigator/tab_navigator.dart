@@ -38,12 +38,15 @@ class _TabNavigatorState extends State<TabNavigator> {
 
   @override
   Widget build(BuildContext context) {
+    //Scaffold:body, bottomNavigationBar
     return Scaffold(
       body: WillPopScope(
         //回调函数 返回Future<bool>类型 为false说明当前路由不出栈,不退出
         onWillPop:exitApp,
         child: PageView(
+          //physics物理效果，不滚动
           physics: NeverScrollableScrollPhysics(),
+          //控制器
           controller: _pageController,
           //滑动监听
           onPageChanged: (index) {
@@ -101,6 +104,7 @@ class _TabNavigatorState extends State<TabNavigator> {
           toastLength: Toast.LENGTH_SHORT,
           fontSize: 14);
       _lastTime = DateTime.now();
+      // Future.value(**);
       return Future.value(false);
     }
     return Future.value(true);

@@ -38,6 +38,7 @@ class _HomePageState extends State<HomePage>
 
   String city = '上海市'; //默认地名
 
+  //定义数据 可变源
   List<CommonModel> bannerList = [];
   List<CommonModel> localNavList = [];
   GridNavModel? gridNav;
