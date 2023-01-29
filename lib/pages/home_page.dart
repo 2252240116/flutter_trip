@@ -27,17 +27,20 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage>
     with AutomaticKeepAliveClientMixin {
+  //不会重建 滑动不会再走initState
   @override
   bool get wantKeepAlive => true;
 
   bool isLoading = true;
   bool isLight = true; //默认系统状态栏字体颜色白色
 
+  //flutter没有float类型。int和double。其中int可以用来表示long。所有基础类型都是继承object
   double appBarAlpha = 0;
   int APPBAR_SCROLL_OFFSET = 100;
 
   String city = '上海市'; //默认地名
 
+  //dart中数组就是列表 【】=list
   //定义数据 可变源
   List<CommonModel> bannerList = [];
   List<CommonModel> localNavList = [];
@@ -52,11 +55,18 @@ class _HomePageState extends State<HomePage>
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    //执行在initState()之后，用于获取其他state
+  }
+
+  @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
         //监听系统状态栏颜色改变`
         value: isLight ? SystemUiOverlayStyle.light : SystemUiOverlayStyle.dark,
         child: Scaffold(
+            // drawer: 侧滑栏
             backgroundColor: Color(0xfff2f2f2), //主要基色
             body: LoadingContainer(
               isLoading: isLoading,
@@ -96,6 +106,7 @@ class _HomePageState extends State<HomePage>
             )));
   }
 
+  //flutter 没有private public的概念。_表示private 但是会有@protected注解
   ListView get _listview {
     return ListView(
       children: [

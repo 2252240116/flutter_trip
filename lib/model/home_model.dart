@@ -71,6 +71,7 @@ class HomeModel {
     return jsonEncode(this);
   }
 
+  //toJson ==> map
   Map<String, dynamic> toJson() => <String, dynamic>{
         'config': config,
         'bannerList': bannerList,

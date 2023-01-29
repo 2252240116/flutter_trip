@@ -62,6 +62,23 @@ class _TabNavigatorState extends State<TabNavigator> {
           ],
         ),
       ),
+      // 底部tab是放在了 Scaffold 的 bottomNavigationBar 中。
+      // 顶部tab是放在 AppBar 的 bottom 中，也就是标题栏之下
+      // appBar: AppBar(
+      //     backgroundColor: _backgroundColor,
+      //     title: _title,
+      //     ///tabBar控件
+      //     bottom: TabBar(
+      //       ///顶部时，tabBar为可以滑动的模式
+      //       isScrollable: true,
+      //       ///必须有的控制器，与pageView的控制器同步
+      //       controller: _pageController,
+      //       ///每一个tab item，是一个List<Widget>
+      //       tabs: _tabItems,
+      //       ///tab底部选中条颜色
+      //       indicatorColor: _indicatorColor,
+      //     ),
+      // ),
       bottomNavigationBar: BottomNavigationBar(
         onTap: (index) {
           //控制pageView位置
