@@ -62,6 +62,10 @@ class _HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) {
+    //..级联运算符 让代码简洁、建议对void方法使用
+    // var s = salesBox?..moreUrl=''
+    //   ..icon='';
+    // var ss = StringBuffer()..write('object')..write('object');
     return AnnotatedRegion<SystemUiOverlayStyle>(
         //监听系统状态栏颜色改变`
         value: isLight ? SystemUiOverlayStyle.light : SystemUiOverlayStyle.dark,
