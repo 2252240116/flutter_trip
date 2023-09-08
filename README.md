@@ -6,3 +6,5 @@
 - 持续集成命令: flutter packages pub run build_runner watch
 
 ![这是图片](/1.png)
+
+#### 感谢：[flutterTrip](https://github.com/Wuyou1998/FlutterTrip)。
